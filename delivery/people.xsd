@@ -1,0 +1,49 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:complexType name="peopleType">
+        <xsd:sequence>
+            <xsd:element ref="person" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute type="xsd:long" name="id"/>
+    </xsd:complexType>
+    <xsd:complexType name="personType">
+        <xsd:sequence>
+            <xsd:element type="xsd:string" name="firstname"/>
+            <xsd:element type="xsd:string" name="lastname"/>
+            <xsd:element type="xsd:dateTime" name="birthdate"/>
+            <xsd:element ref="healthprofile" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+        <xsd:attribute type="xsd:long" name="id"/>
+    </xsd:complexType>
+    <xsd:complexType name="healthprofileType">
+        <xsd:sequence>
+            <xsd:element type="xsd:dateTime" name="lastupdate"/>
+            <xsd:element name="weight">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:minInclusive value="40"/>
+                        <xsd:maxInclusive value="110"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="height">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:float">
+                        <xsd:minInclusive value="1.40"/>
+                        <xsd:maxInclusive value="2.00"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="bmi">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:float">
+                        <xsd:minInclusive value="10.0"/>
+                        <xsd:maxInclusive value="60.0"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="people" type="peopleType"/>
+    <xsd:element name="person" type="personType"/>
+    <xsd:element name="healthprofile" type="healthprofileType"/>
+</xsd:schema>
