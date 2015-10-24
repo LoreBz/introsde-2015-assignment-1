@@ -20,17 +20,35 @@ import people.generated.PersonType;
 
 public class JAXBMarshaller {
 
+    /*
+    / with the use of JAXB (Java Architecture for XML Binding) we marshall some
+    / java instances of Person generating an XML document. This document records
+    / the info related to those specific persons created with Java. This "marshalling"
+    / operation could be useful to transfer data at a networking level or to store
+    / persistently information about tha Java-handeled persons
+    */
     public void generateXMLDocument(File xmlDocument) throws DatatypeConfigurationException {
         try {
-
+            //JAXB works only if it can understand how to marshal
+            //tha Java objects it has to work with.
+            //That's why we should specify in which context the JAXB can work.
+            //For instance the context is a folder where xjc has written some java classes
+            //These classes have annotations inside, that are used by the marshaller
+            //to map specific info into xml elements or attributes etc.
+            //The mapping (defined by the annotations present in the java classes) is
+            //governed by an xml schema (XSD), in the present case by people.xsd
             JAXBContext jaxbContext = JAXBContext
-                    .newInstance("people.generated");
+                    .newInstance("people.generated");//people.generated is the context folder
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty("jaxb.formatted.output", new Boolean(true));
             people.generated.ObjectFactory factory = new people.generated.ObjectFactory();
 
+            //xjc produces also an ObjectFactory that should be used to create marshable objects
+            //for example if we want to marshal a collection of persons, i.e. a people element,
+            //we should create a PeopleType object invoking the ObjectFactory
             PeopleType people = factory.createPeopleType();
 
+            //Then we create some other marshable objects
             HealthprofileType hp1 = factory.createHealthprofileType();
             GregorianCalendar gregorianCalendar = GregorianCalendar.from(randomDate(2010, 4));
             XMLGregorianCalendar xmldate1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
@@ -86,12 +104,13 @@ public class JAXBMarshaller {
             people.getPerson().add(fdomino);
             people.getPerson().add(olivia);
 
+            //finally we put all toghether and we effectively execute the marshaller
             JAXBElement<PeopleType> peopleElement = factory
                     .createPeople(people);
             marshaller.marshal(peopleElement,
-                    new FileOutputStream(xmlDocument));
+                    new FileOutputStream(xmlDocument));//output to file
             marshaller.marshal(peopleElement,
-                   System.out);
+                   System.out);//output to terminal
 
         } catch (IOException e) {
             System.out.println(e.toString());
@@ -107,9 +126,9 @@ public class JAXBMarshaller {
         String xmlDocument = "jaxb_people.xml";
         JAXBMarshaller jaxbMarshaller = new JAXBMarshaller();
         jaxbMarshaller.generateXMLDocument(new File(xmlDocument));
-        //System.out.println("ant riesce ad eseguirmi");
     }
 
+    //to get a random date compatible with XML proper way of representing dates and times
     private static ZonedDateTime randomDate(int minYear, int range) {
         int randomYear = new Random().nextInt(range) + minYear;
         int dayOfMonth = new Random().nextInt(28) + 1;

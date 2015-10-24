@@ -1,3 +1,6 @@
+<!-- schema to define people as a sequence of person-->
+<!--a person is a sequence of simple elements such as firstname and birthdate-->
+<!--every person own an healthprofile (hp): the hp includes info about weight, height and bmi-->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:complexType name="peopleType">
         <xsd:sequence>

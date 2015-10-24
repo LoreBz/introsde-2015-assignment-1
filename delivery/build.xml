@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ================================= 
     Introduction to Service Design and Engineering Laboratory
-    Description: ANT build script for the session on JAXB and Dozer 
-    Author: cdparra
+    Description: ANT build script for the assignment1 (Marshalling/Unmarshalling)
     
     Notes: 
     
@@ -15,14 +14,14 @@
        # The target "download-ivy" and "install-ivy" will download the ivy jar and place it in the "ivy" folder
        # 
 -->
-<project name="JAXBExample" default="compile" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="JAXBAssignment" default="compile" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<!-- PART 1: Ivy properties, download, installation and configuration -->
 	<property name="ivy.install.version" value="2.4.0-rc1" />
 	<property name="ivy.jar.dir" value="${basedir}/ivy" />
 	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
 
-	<!-- this targe will donwload ivy.jar if its inot in the "ivy" folder yet -->
+	<!-- this target will donwload ivy.jar if its inot in the "ivy" folder yet -->
 	<target name="download-ivy" unless="skip.download">
 		<mkdir dir="${ivy.jar.dir}"/>
 		<!-- download Ivy from web site so that it can be used even without any special installation -->
@@ -135,7 +134,7 @@
 	</target>
 
 	<target name="execute.XPathTestAdvance" depends="execute.XMLPeopleDBGenerator">
-		<echo message="Executing XPathTestAdvance" />
+		<echo message="Executing XPathTestAdvance (exercises based on lab3)" />
 		<java classname="people.XPathTestAdvance" classpath="${build.dir}">
 			<classpath>
 				<fileset dir="${lib.dir}">
@@ -186,56 +185,8 @@
 		</java>
 	</target>
 
-	<target name="execute.evaluation" depends="execute.XPathTestAdvance, execute.JAXBMarshaller, execute.JAXBUnMarshaller, execute.PeopleJson">
+	<target name="execute.evaluation" depends="compile, execute.XPathTestAdvance, execute.JAXBMarshaller, execute.JAXBUnMarshaller, execute.PeopleJson">
 		<echo message="Executing evaluation targets" />
 	</target>
 
 </project>
-
-<!--target name="execute.HPWriter">
-		<echo message="Executing Health Profile Writer: will produce a people.xml in home folder" />
-		<java classname="HealthProfileWriter" classpath="${build.dir}">
-			<classpath>
-				<fileset dir="${lib.dir}">
-					<include name="**/*.jar" />
-					<include name="*.jar" />
-				</fileset>
-			</classpath>
-		</java>
-	</target>
-
-	<target name="execute.HPReader">
-		<echo message="Executing Health Profile Reader: will read the people.xml in home folder and print one at a time" />
-		<java classname="HealthProfileReader" classpath="${build.dir}">
-			<classpath>
-				<fileset dir="${lib.dir}">
-					<include name="**/*.jar" />
-					<include name="*.jar" />
-				</fileset>
-			</classpath>
-		</java>
-	</target>
-
-	<target name="execute.JavaToXML">
-		<echo message="Executing JavaToXML" />
-		<java classname="bookstore.JavaToXML" classpath="${build.dir}">
-			<classpath>
-				<fileset dir="${lib.dir}">
-					<include name="**/*.jar" />
-					<include name="*.jar" />
-				</fileset>
-			</classpath>
-		</java>
-	</target-->
-
-	<!--target name="execute.dozerExample">
-		<echo message="Executing Dozer Example" />
-		<java classname="dozerproject.DozerMapperTest" classpath="${build.dir}">
-			<classpath>
-				<fileset dir="${lib.dir}">
-					<include name="**/*.jar" />
-					<include name="*.jar" />
-				</fileset>
-			</classpath>
-		</java>
-	</target-->
