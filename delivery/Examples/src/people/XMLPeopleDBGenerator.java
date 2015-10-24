@@ -19,7 +19,8 @@ import java.time.format.DateTimeFormatter;
 import java.io.File;
 
 /**
- *
+ * this class is used to simply randomly combine some predefined names, lastnames etc
+ * in order to create an xml db of people
  * @author Lorenzo
  */
 public class XMLPeopleDBGenerator {

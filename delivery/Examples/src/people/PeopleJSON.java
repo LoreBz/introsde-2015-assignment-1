@@ -55,6 +55,7 @@ public class PeopleJSON {
 
     public static void main(String[] args) throws /*DatatypeConfigurationException, IOException, JsonProcessingException*/Exception {
         PeopleJSON test = new PeopleJSON(); 
+        // put some person in our logical java db of people
         test.initializePeople();
         // Jackson Object Mapper
         ObjectMapper mapper = new ObjectMapper();
@@ -67,6 +68,7 @@ public class PeopleJSON {
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         mapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
 
+        //thanks to Jackson module we are able to marshal our list of person into JSON
         String result = mapper.writeValueAsString(people);
         System.out.println(result);
         mapper.writeValue(new File("people.json"), people);
